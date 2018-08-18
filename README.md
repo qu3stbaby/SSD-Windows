@@ -14,26 +14,25 @@ measure servers' latency and display automatically     自动测节点延迟并�
 ```
 #### Environment 环境
 
-Microsoft .NET Framework 4.6.2 or higher, Microsoft Visual C++ 2015 Redistributable (x86) .
+Microsoft .NET Framework 4.6.2 or higher
+Microsoft Visual C++ 2015 Redistributable (x86) .
 
 #### Development 开发
 
-Visual Studio 2017 & .NET Framework 4.6.2 Developer Pack
+Visual Studio 2017
+.NET Framework 4.6.2 Developer Pack
 
-
-#### Open Source Components / Libraries
-
+#### Open Source Components / Libraries 开源组件/库
 ```
-shadowsocks-windows(GPLv3) https://github.com/shadowsocks/shadowsocks-windows
-Caseless.Fody (MIT)        https://github.com/Fody/Caseless
-Costura.Fody (MIT)         https://github.com/Fody/Costura
-Fody (MIT)                 https://github.com/Fody/Fody
-GlobalHotKey (GPLv3)       https://github.com/kirmir/GlobalHotKey
-Newtonsoft.Json (MIT)      https://www.newtonsoft.com/json
-StringEx.CS ()             https://github.com/LazyMode/StringEx
-ZXing.Net (Apache 2.0)     https://github.com/micjahn/ZXing.Net
-
-libsscrypto (GPLv2)        https://github.com/shadowsocks/libsscrypto
-Privoxy (GPLv2)            https://www.privoxy.org
-Sysproxy ()                https://github.com/Noisyfox/sysproxy
+shadowsocks-windows (GPLv3) https://github.com/shadowsocks/shadowsocks-windows
+Caseless.Fody (MIT)         https://github.com/Fody/Caseless
+Costura.Fody (MIT)          https://github.com/Fody/Costura
+Fody (MIT)                  https://github.com/Fody/Fody
+GlobalHotKey (GPLv3)        https://github.com/kirmir/GlobalHotKey
+Newtonsoft.Json (MIT)       https://www.newtonsoft.com/json
+StringEx.CS ()              https://github.com/LazyMode/StringEx
+ZXing.Net (Apache 2.0)      https://github.com/micjahn/ZXing.Net
+libsscrypto (GPLv2)         https://github.com/shadowsocks/libsscrypto
+Privoxy (GPLv2)             https://www.privoxy.org
+Sysproxy ()                 https://github.com/Noisyfox/sysproxy
 ```
