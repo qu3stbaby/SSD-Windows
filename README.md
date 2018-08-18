@@ -1,7 +1,6 @@
 ShadowsocksD for Windows
 =======================
 
-
 #### Basic Project 基础项目
 
 [shadowsocks-windows](https://github.com/shadowsocks/shadowsocks-windows)
@@ -12,6 +11,8 @@ Support subscription and update automatically          支持订阅并自动更�
 Anti-360/2345/Baidu                                    反360/2345/百度
 measure servers' latency and display automatically     自动测节点延迟并显示
 ```
+[订阅链接规范](https://github.com/SoDa-GitHub/SSD-Windows/wiki/%E8%AE%A2%E9%98%85%E9%93%BE%E6%8E%A5%E8%A7%84%E8%8C%83)
+
 #### Environment 环境
 
 Microsoft .NET Framework 4.6.2 or higher
