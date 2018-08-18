@@ -232,11 +232,11 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="_SSD\View\MenuViewController.cs" />
-    <Compile Include="_SSD\View\SubscriptionSettingsForm.cs">
+    <Compile Include="_SSD\View\SubscriptionManagementForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="_SSD\View\SubscriptionSettingsForm.Designer.cs">
-      <DependentUpon>SubscriptionSettingsForm.cs</DependentUpon>
+    <Compile Include="_SSD\View\SubscriptionManagementForm.Designer.cs">
+      <DependentUpon>SubscriptionManagementForm.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="View\ConfigForm.resx">
       <DependentUpon>ConfigForm.cs</DependentUpon>
@@ -265,8 +265,8 @@
     <EmbeddedResource Include="View\StatisticsStrategyConfigurationForm.resx">
       <DependentUpon>StatisticsStrategyConfigurationForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="_SSD\View\SubscriptionSettingsForm.resx">
-      <DependentUpon>SubscriptionSettingsForm.cs</DependentUpon>
+    <EmbeddedResource Include="_SSD\View\SubscriptionManagementForm.resx">
+      <DependentUpon>SubscriptionManagementForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="app.manifest">

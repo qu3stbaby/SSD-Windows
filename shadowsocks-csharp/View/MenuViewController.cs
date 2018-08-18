@@ -284,6 +284,9 @@ namespace Shadowsocks.View
                     CreateMenuItem("Share Server Config...", new EventHandler(this.QRCodeItem_Click)),
                     CreateMenuItem("Scan QRCode from Screen...", new EventHandler(this.ScanQRCodeItem_Click)),
                     CreateMenuItem("Import URL from Clipboard...", new EventHandler(this.ImportURLItem_Click))
+                    #region SSD
+                    ,CreateImportBase64Item()
+                    #endregion
                 }),
                 #region SSD
                 CreateSubscribeGroup(),
@@ -604,6 +607,10 @@ namespace Shadowsocks.View
 
         private void AboutItem_Click(object sender, EventArgs e)
         {
+            #region SSD
+            AboutSSD();
+            return;
+            #endregion
             Process.Start("https://github.com/shadowsocks/shadowsocks-windows");
         }
 

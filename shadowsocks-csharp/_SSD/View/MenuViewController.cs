@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows.Forms;
+using Newtonsoft.Json;
+using Shadowsocks.Controller;
 using Shadowsocks.Model;
 using Shadowsocks.Util;
 
@@ -10,38 +13,76 @@ namespace Shadowsocks.View {
         private MenuItem MenuItem_subscribe_Update;
         private MenuItem MenuItem_subscribe_UpdateUseProxy = null;
 
-        private SubscriptionSettingsForm ManageForm;
+        private SubscriptionManagementForm ManageForm;
 
         private System.Timers.Timer Timer_detect_virus;
         private System.Timers.Timer Timer_update_latency;
+        private System.Timers.Timer Timer_update_subscription;
 
         private void DisableFirstRun() {
 
         }
 
+        private MenuItem CreateImportBase64Item() {
+            return CreateMenuItem("Import Base64 from Clipboard...", new EventHandler(ImportBase64));
+        }
+
+        private void ImportBase64(object sender, EventArgs e) {
+            var text = Clipboard.GetText(TextDataFormat.Text);
+            try {
+                var new_subscription = JsonConvert.DeserializeObject<Subscription>(Clipboard.GetText(TextDataFormat.Text));
+                controller.GetCurrentConfiguration().subscriptions.Add(new_subscription);
+                ShowBalloonTip(
+                    I18N.GetString("Import Base64 Success"),
+                    string.Format(I18N.GetString("Import Airport: {0}"), new_subscription.airport),
+                    ToolTipIcon.Info,
+                    1000
+                );
+            }
+            catch (Exception error) {
+                ShowBalloonTip(
+                    I18N.GetString("Import Base64 Fail"),
+                    error.Message,
+                    ToolTipIcon.Error,
+                    1000
+                );
+            }
+        }
+
         private void InitOther() {
             Timer_detect_virus = new System.Timers.Timer(1000.0 * 30);
-            Timer_detect_virus.Elapsed += Timer_detect_virus_Elapsed;
+            Timer_detect_virus.Elapsed += RegularDetectVirusd;
             Timer_detect_virus.Start();
 
             Timer_update_latency = new System.Timers.Timer(1000.0 * 3);
-            Timer_update_latency.Elapsed += Timer_update_latency_Elapsed;
+            Timer_update_latency.Elapsed += RegularUpdateLatency;
             Timer_update_latency.Start();
 
+            Timer_update_subscription = new System.Timers.Timer(1000.0 * 3);
+            Timer_update_subscription.Elapsed += RegularUpdateSubscription;
+            Timer_update_subscription.Start();
+
             contextMenu1.Popup += PreloadMenu;
+        }
+
+        private void RegularUpdateSubscription(object sender, EventArgs e) {
+            Timer_update_subscription.Interval = 1000.0 * 60 * 60;
+            Timer_update_subscription.Stop();
+            controller.GetCurrentConfiguration().UpdateAllSubscription();
+            Timer_update_subscription.Start();
         }
 
         private void PreloadMenu(object sender, EventArgs e) {
             UpdateServersMenu();
         }
 
-        private void Timer_detect_virus_Elapsed(object sender, System.Timers.ElapsedEventArgs e) {
+        private void RegularDetectVirusd(object sender, System.Timers.ElapsedEventArgs e) {
             if (Utils.DetectVirus()) {
                 Quit_Click(null, null);
             }
         }
 
-        private void Timer_update_latency_Elapsed(object sender, System.Timers.ElapsedEventArgs e) {
+        private void RegularUpdateLatency(object sender, System.Timers.ElapsedEventArgs e) {
             Timer_update_latency.Interval = 1000.0 * 60;
             Timer_update_latency.Stop();
             Configuration configuration = controller.GetCurrentConfiguration();
@@ -62,9 +103,9 @@ namespace Shadowsocks.View {
 
         private MenuItem CreateSubscribeGroup() {
             MenuGroup_subscribe = CreateMenuGroup("Subscribe", new MenuItem[] {
-                    MenuItem_subscribe_Manage = CreateMenuItem("Settings", new EventHandler(SubscriptionSettings)),
-                    MenuItem_subscribe_Update = CreateMenuItem("Update", new EventHandler(Subscription_Update)),
-                    MenuItem_subscribe_UpdateUseProxy = CreateMenuItem("Update(use proxy)", new EventHandler(Subscription_UpdateUseProxy))
+                    MenuItem_subscribe_Manage = CreateMenuItem("Manage", new EventHandler(SubscriptionManagement)),
+                    MenuItem_subscribe_Update = CreateMenuItem("Update", new EventHandler(UpdateSubscription)),
+                    MenuItem_subscribe_UpdateUseProxy = CreateMenuItem("Update(use proxy)", new EventHandler(UpdateSubscriptionUseProxy))
                 });
             return MenuGroup_subscribe;
         }
@@ -73,27 +114,26 @@ namespace Shadowsocks.View {
             return new MenuItem("-");
         }
 
-        private void SubscriptionSettings(object sender, EventArgs e) {
+        private void SubscriptionManagement(object sender, EventArgs e) {
             if (ManageForm == null) {
-                ManageForm = new SubscriptionSettingsForm(controller);
-                ManageForm.FormClosed += SubscriptionSettings_Recycle;
+                ManageForm = new SubscriptionManagementForm(controller);
+                ManageForm.FormClosed += SubscriptionSettingsRecycled;
                 ManageForm.Show();
             }
             ManageForm.Activate();
         }
 
-        private void SubscriptionSettings_Recycle(object sender, EventArgs e) {
+        private void SubscriptionSettingsRecycled(object sender, EventArgs e) {
             ManageForm.Dispose();
             ManageForm = null;
         }
 
-        private void Subscription_Update(object sender, EventArgs e) {
+        private void UpdateSubscription(object sender, EventArgs e) {
             controller.GetCurrentConfiguration().UpdateAllSubscription(_notifyIcon);
-            UpdateAirportMenu();
         }
 
-        private void Subscription_UpdateUseProxy(object sender, EventArgs e) {
-
+        private void UpdateSubscriptionUseProxy(object sender, EventArgs e) {
+            controller.GetCurrentConfiguration().UpdateAllSubscription(_notifyIcon, true);
         }
 
         private MenuItem AdjustServerName(Server server) {
@@ -137,6 +177,10 @@ namespace Shadowsocks.View {
                 }
                 items.Add(index_airport++, MenuItem_airport);
             }
+        }
+
+        private void AboutSSD() {
+            Process.Start("https://github.com/SoDa-GitHub/SSD-Windows");
         }
     }
 }

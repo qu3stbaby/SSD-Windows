@@ -32,14 +32,13 @@ namespace Shadowsocks.Controller {
                     var version_current = new Version(VERSION_SSD);
                     var version_web = new Version(text_version);
                     if (version_current < version_web) {
-                        MessageBox.Show(I18N.GetString("当前版本过低"));
+                        MessageBox.Show(I18N.GetString("Current version is too old"));
                         return true;
                     }
                 }
 
             }
             catch (Exception) {
-                return false;
             }
             return false;
         }

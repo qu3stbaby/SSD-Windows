@@ -40,23 +40,24 @@ namespace Shadowsocks.Model {
             return GetDefaultServer();
         }
 
-        public void UpdateAllSubscription(NotifyIcon notifyIcon = null) {
+        public void UpdateAllSubscription(NotifyIcon notifyIcon = null, bool proxy = false) {
+            if (subscriptions.Count == 0 && notifyIcon != null) {
+                notifyIcon.ShowBalloonTip(
+                    1000,
+                    I18N.GetString("Subscribe Fail"),
+                    I18N.GetString("No Subscription"),
+                    ToolTipIcon.Error
+                );
+            }
             var web_subscribe = new WebClient();
+            if (proxy) {
+                web_subscribe.Proxy = new WebProxy(IPAddress.Loopback.ToString(), localPort);
+            }
             for (var index = 0; index <= subscriptions.Count - 1; index++) {
                 try {
                     var buffer = web_subscribe.DownloadData(subscriptions[index].url);
                     var text = Encoding.GetEncoding("UTF-8").GetString(buffer);
-                    text.Replace('-', '+');
-                    text.Replace('_', '/');
-                    var mod4 = text.Length % 4;
-                    if (mod4 > 0) {
-                        text += new string('=', 4 - mod4);
-                    }
-                    var json_buffer = Convert.FromBase64String(text);
-                    var json_text = Encoding.UTF8.GetString(json_buffer);
-                    var url_backup = subscriptions[index].url;
-                    subscriptions[index] = JsonConvert.DeserializeObject<Subscription>(json_text);
-                    subscriptions[index].url = url_backup;
+                    subscriptions[index].ParseBase64(text);
                 }
                 catch (Exception) {
                     if (notifyIcon != null) {
@@ -67,12 +68,6 @@ namespace Shadowsocks.Model {
                     }
                     subscriptions[index].airport = "(error)";
                     continue;
-                }
-                foreach (var server in subscriptions[index].servers) {
-                    server.server_port = subscriptions[index].port;
-                    server.password = subscriptions[index].password;
-                    server.method = subscriptions[index].encryption;
-                    server.subscription = subscriptions[index];
                 }
                 if (notifyIcon != null) {
                     notifyIcon.BalloonTipTitle = I18N.GetString("Subscribe Success");

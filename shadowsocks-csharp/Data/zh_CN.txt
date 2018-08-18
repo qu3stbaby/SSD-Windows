@@ -148,3 +148,35 @@ Proxy handshake failed=代理握手失败
 Register hotkey failed=注册快捷键失败
 Cannot parse hotkey: {0}=解析快捷键失败: {0}
 Timeout is invalid, it should not exceed {0}=超时无效，不应超过 {0}
+
+
+## SSD
+
+# Menu items
+
+Import Base64 from Clipboard...=从剪贴板导入Base64...
+Subscribe=订阅
+Manage=管理
+Update=更新
+Update(use proxy)=更新（通过代理）
+
+# SubscriptionManagement Form
+
+Subscription Management=订阅管理
+Subscription URL=订阅链接
+Airport Name=机场名
+(Auto)=（自动）
+&Save=保存
+
+
+# Message
+
+Current version is too old=当前版本过低
+Import Base64 Success=导入 Base64 成功
+Import Airport: {0}=导入机场： {0}
+Import Base64 Fail=导入 Base64 失败
+Subscribe Fail=订阅失败
+Fail Link: {0}=失败链接： {0}
+Subscribe Success=订阅成功
+Success Airport: {0}=成功机场： {0}
+No Subscription=没有订阅

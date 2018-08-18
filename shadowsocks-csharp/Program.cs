@@ -65,9 +65,6 @@ namespace Shadowsocks
                 if (!mutex.WaitOne(0, false))
                 {
                     Process[] oldProcesses = Process.GetProcessesByName("Shadowsocks");
-                    #region SSD
-                    oldProcesses = OldProcess();
-                    #endregion
                     if (oldProcesses.Length > 0)
                     {
                         Process oldProcess = oldProcesses[0];
@@ -104,9 +101,12 @@ namespace Shadowsocks
             {
                 string errMsg = e.ExceptionObject.ToString();
                 Logging.Error(errMsg);
-                MessageBox.Show(
+                #region SSD
+                UnexpectedError(false, errMsg);
+                /*MessageBox.Show(
                     $"{I18N.GetString("Unexpected error, shadowsocks will exit. Please report to")} https://github.com/shadowsocks/shadowsocks-windows/issues {Environment.NewLine}{errMsg}",
-                    "Shadowsocks non-UI Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    "Shadowsocks non-UI Error", MessageBoxButtons.OK, MessageBoxIcon.Error);*/
+                #endregion
                 Application.Exit();
             }
         }
@@ -117,9 +117,12 @@ namespace Shadowsocks
             {
                 string errorMsg = $"Exception Detail: {Environment.NewLine}{e.Exception}";
                 Logging.Error(errorMsg);
-                MessageBox.Show(
+                #region SSD
+                UnexpectedError(true, errorMsg);
+                /*MessageBox.Show(
                     $"{I18N.GetString("Unexpected error, shadowsocks will exit. Please report to")} https://github.com/shadowsocks/shadowsocks-windows/issues {Environment.NewLine}{errorMsg}",
-                    "Shadowsocks UI Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    "Shadowsocks UI Error", MessageBoxButtons.OK, MessageBoxIcon.Error);*/
+                #endregion
                 Application.Exit();
             }
         }
