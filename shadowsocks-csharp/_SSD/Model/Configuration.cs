@@ -62,7 +62,7 @@ namespace Shadowsocks.Model {
                 catch (Exception) {
                     if (notifyIcon != null) {
                         notifyIcon.BalloonTipTitle = I18N.GetString("Subscribe Fail");
-                        notifyIcon.BalloonTipText = string.Format(I18N.GetString("Fail Link: {0}"), subscriptions[index].url);
+                        notifyIcon.BalloonTipText = string.Format(I18N.GetString("Failed Link: {0}"), subscriptions[index].url);
                         notifyIcon.BalloonTipIcon = ToolTipIcon.Info;
                         notifyIcon.ShowBalloonTip(0);
                     }
@@ -71,7 +71,7 @@ namespace Shadowsocks.Model {
                 }
                 if (notifyIcon != null) {
                     notifyIcon.BalloonTipTitle = I18N.GetString("Subscribe Success");
-                    notifyIcon.BalloonTipText = string.Format(I18N.GetString("Success Airport: {0}"), subscriptions[index].airport);
+                    notifyIcon.BalloonTipText = string.Format(I18N.GetString("Successful Airport: {0}"), subscriptions[index].airport);
                     notifyIcon.BalloonTipIcon = ToolTipIcon.Info;
                     notifyIcon.ShowBalloonTip(0);
                 }

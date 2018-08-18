@@ -284,9 +284,6 @@ namespace Shadowsocks.View
                     CreateMenuItem("Share Server Config...", new EventHandler(this.QRCodeItem_Click)),
                     CreateMenuItem("Scan QRCode from Screen...", new EventHandler(this.ScanQRCodeItem_Click)),
                     CreateMenuItem("Import URL from Clipboard...", new EventHandler(this.ImportURLItem_Click))
-                    #region SSD
-                    ,CreateImportBase64Item()
-                    #endregion
                 }),
                 #region SSD
                 CreateSubscribeGroup(),
@@ -783,6 +780,10 @@ namespace Shadowsocks.View
 
         private void ImportURLItem_Click(object sender, EventArgs e)
         {
+            #region SSD
+            ImportURL();
+            return;
+            #endregion
             var success = controller.AddServerBySSURL(Clipboard.GetText(TextDataFormat.Text));
             if (success)
             {

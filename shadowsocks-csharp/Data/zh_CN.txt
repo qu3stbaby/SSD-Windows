@@ -154,7 +154,6 @@ Timeout is invalid, it should not exceed {0}=超时无效，不应超过 {0}
 
 # Menu items
 
-Import Base64 from Clipboard...=从剪贴板导入Base64...
 Subscribe=订阅
 Manage=管理
 Update=更新
@@ -172,11 +171,13 @@ Airport Name=机场名
 # Message
 
 Current version is too old=当前版本过低
-Import Base64 Success=导入 Base64 成功
+Import Success=导入成功
 Import Airport: {0}=导入机场： {0}
-Import Base64 Fail=导入 Base64 失败
+Import Fail=导入失败
+Import URL: {0}=导入 URL： {0}
+Import Count: {0}=导入数量： {0}
 Subscribe Fail=订阅失败
-Fail Link: {0}=失败链接： {0}
+Failed Link: {0}=失败链接： {0}
 Subscribe Success=订阅成功
-Success Airport: {0}=成功机场： {0}
+Successful Airport: {0}=成功机场： {0}
 No Subscription=没有订阅

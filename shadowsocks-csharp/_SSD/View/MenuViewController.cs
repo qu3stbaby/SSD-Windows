@@ -23,29 +23,49 @@ namespace Shadowsocks.View {
 
         }
 
-        private MenuItem CreateImportBase64Item() {
-            return CreateMenuItem("Import Base64 from Clipboard...", new EventHandler(ImportBase64));
-        }
-
-        private void ImportBase64(object sender, EventArgs e) {
-            var text = Clipboard.GetText(TextDataFormat.Text);
-            try {
-                var new_subscription = JsonConvert.DeserializeObject<Subscription>(Clipboard.GetText(TextDataFormat.Text));
-                controller.GetCurrentConfiguration().subscriptions.Add(new_subscription);
-                ShowBalloonTip(
-                    I18N.GetString("Import Base64 Success"),
-                    string.Format(I18N.GetString("Import Airport: {0}"), new_subscription.airport),
-                    ToolTipIcon.Info,
-                    1000
-                );
+        private void ImportURL() {
+            var clipboard = Clipboard.GetText(TextDataFormat.Text).Trim();
+            if (clipboard.IndexOf("ss://")!=-1) {
+                var count_old = controller.GetCurrentConfiguration().configs.Count;
+                var success = controller.AddServerBySSURL(clipboard);
+                var count_new = controller.GetCurrentConfiguration().configs.Count;
+                if (success) {
+                    ShowBalloonTip(
+                        I18N.GetString("Import Success"),
+                        string.Format(I18N.GetString("Import Count: {0}"), count_new-count_old),
+                        ToolTipIcon.Info,
+                        1000
+                    );
+                }
+                else {
+                    clipboard.Replace("ssd://", "");
+                    ShowBalloonTip(
+                        I18N.GetString("Import Fail"),
+                        string.Format(I18N.GetString("Import URL: {0}"), clipboard),
+                        ToolTipIcon.Error,
+                        1000
+                    );
+                }
             }
-            catch (Exception error) {
-                ShowBalloonTip(
-                    I18N.GetString("Import Base64 Fail"),
-                    error.Message,
-                    ToolTipIcon.Error,
-                    1000
-                );
+            else {
+                try {
+                    var new_subscription = Subscription.ParseNewBase64(Clipboard.GetText(TextDataFormat.Text));
+                    controller.GetCurrentConfiguration().subscriptions.Add(new_subscription);
+                    ShowBalloonTip(
+                        I18N.GetString("Import Success"),
+                        string.Format(I18N.GetString("Import Airport: {0}"), new_subscription.airport),
+                        ToolTipIcon.Info,
+                        1000
+                    );
+                }
+                catch (Exception) {
+                    ShowBalloonTip(
+                        I18N.GetString("Import Fail"),
+                        string.Format(I18N.GetString("Import URL: {0}"), clipboard),
+                        ToolTipIcon.Error,
+                        1000
+                    );
+                }
             }
         }
 
