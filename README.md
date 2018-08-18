@@ -15,11 +15,13 @@ measure servers' latency and display automatically     自动测节点延迟并�
 #### Environment 环境
 
 Microsoft .NET Framework 4.6.2 or higher
-Microsoft Visual C++ 2015 Redistributable (x86) .
+
+Microsoft Visual C++ 2015 Redistributable (x86)
 
 #### Development 开发
 
 Visual Studio 2017
+
 .NET Framework 4.6.2 Developer Pack
 
 #### Open Source Components / Libraries 开源组件/库
