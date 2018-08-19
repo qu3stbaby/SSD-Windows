@@ -13,6 +13,10 @@ measure servers' latency and display automatically     自动测节点延迟并�
 ```
 [订阅链接规范](https://github.com/SoDa-GitHub/SSD-Windows/wiki/%E8%AE%A2%E9%98%85%E9%93%BE%E6%8E%A5%E8%A7%84%E8%8C%83)
 
+#### Telegram
+
+https://t.me/joinchat/GvbhT0vatPxTnqLtUgPe7Q
+
 #### Environment 环境
 
 Microsoft .NET Framework 4.6.2 or higher
