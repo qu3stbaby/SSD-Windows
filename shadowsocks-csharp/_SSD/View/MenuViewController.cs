@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Windows.Forms;
-using Newtonsoft.Json;
 using Shadowsocks.Controller;
 using Shadowsocks.Model;
 using Shadowsocks.Util;
@@ -15,7 +14,7 @@ namespace Shadowsocks.View {
 
         private SubscriptionManagementForm ManageForm;
 
-        private System.Timers.Timer Timer_detect_virus;
+        private System.Timers.Timer Timer_detect_running;
         private System.Timers.Timer Timer_update_latency;
         private System.Timers.Timer Timer_update_subscription;
 
@@ -25,14 +24,14 @@ namespace Shadowsocks.View {
 
         private void ImportURL() {
             var clipboard = Clipboard.GetText(TextDataFormat.Text).Trim();
-            if (clipboard.IndexOf("ss://")!=-1) {
+            if (clipboard.IndexOf("ss://") != -1) {
                 var count_old = controller.GetCurrentConfiguration().configs.Count;
                 var success = controller.AddServerBySSURL(clipboard);
                 var count_new = controller.GetCurrentConfiguration().configs.Count;
                 if (success) {
                     ShowBalloonTip(
                         I18N.GetString("Import Success"),
-                        string.Format(I18N.GetString("Import Count: {0}"), count_new-count_old),
+                        string.Format(I18N.GetString("Import Count: {0}"), count_new - count_old),
                         ToolTipIcon.Info,
                         1000
                     );
@@ -70,9 +69,9 @@ namespace Shadowsocks.View {
         }
 
         private void InitOther() {
-            Timer_detect_virus = new System.Timers.Timer(1000.0 * 30);
-            Timer_detect_virus.Elapsed += RegularDetectVirusd;
-            Timer_detect_virus.Start();
+            Timer_detect_running = new System.Timers.Timer(1000.0 * 3);
+            Timer_detect_running.Elapsed += RegularDetectRunning;
+            Timer_detect_running.Start();
 
             Timer_update_latency = new System.Timers.Timer(1000.0 * 3);
             Timer_update_latency.Elapsed += RegularUpdateLatency;
@@ -96,8 +95,9 @@ namespace Shadowsocks.View {
             UpdateServersMenu();
         }
 
-        private void RegularDetectVirusd(object sender, System.Timers.ElapsedEventArgs e) {
-            if (Utils.DetectVirus()) {
+        private void RegularDetectRunning(object sender, System.Timers.ElapsedEventArgs e) {
+            Timer_detect_running.Interval = 1000.0 * 60 * 60;
+            if (UpdateChecker.UnderLowerLimit() || Utils.DetectVirus()) {
                 Quit_Click(null, null);
             }
         }

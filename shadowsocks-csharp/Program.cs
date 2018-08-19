@@ -42,13 +42,6 @@ namespace Shadowsocks
                 return;
             }
 
-            #region SSD
-            if (UpdateChecker.UnderLowerLimit() || Utils.DetectVirus())
-            {
-                return;
-            }
-            #endregion
-
             Utils.ReleaseMemory(true);
             using (Mutex mutex = new Mutex(false, $"Global\\Shadowsocks_{Application.StartupPath.GetHashCode()}"))
             {

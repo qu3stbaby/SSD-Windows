@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace Shadowsocks.Controller {
     public partial class UpdateChecker {
-        private const string VERSION_BASE = "4.1.1";
+        private const string VERSION_BASIC = "4.1.1";
         private const string VERSION_SSD = "0.0.2";
         private const string UPDATE_URL_SSD = "https://api.github.com/repos/SoDa-GitHub/SSD-Windows/releases/latest";
 
