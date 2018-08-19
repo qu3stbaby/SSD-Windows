@@ -15,7 +15,7 @@ measure servers' latency and display automatically     自动测节点延迟并�
 
 #### Telegram
 
-https://t.me/joinchat/GvbhT0vatPxTnqLtUgPe7Q
+[点我加入](https://t.me/joinchat/GvbhT0vatPxTnqLtUgPe7Q) 急需内测小白鼠（无薪）
 
 #### Environment 环境
 
